@@ -1,7 +1,7 @@
 package semestralka;
 
 
-public class Planeta extends Entita {
+public class Planet extends Entity {
 	  															/* konstruktor */
 	     
 	  /**
@@ -10,7 +10,7 @@ public class Planeta extends Entita {
 	   * @param xSour, ySour
 	   * @param pocetSousC
 	   */ 
-	  public Planeta(int id, double xSour, double ySour, int pocetSous) {
-		  super(id, xSour, ySour, pocetSous);
+	  public Planet(int id, double xAxis, double yAxis, int neighbourCount) {
+		  super(id, xAxis, yAxis, neighbourCount);
 	  }	   
 }

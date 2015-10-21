@@ -1,7 +1,7 @@
 package semestralka;
 
 
-public class Centrala extends Entita{	
+public class Factory extends Entity{	
 	  																		/* konstruktor */
 	     
 	  /**
@@ -10,7 +10,7 @@ public class Centrala extends Entita{
 	   * @param xSour, ySour
 	   * @param pocetSousC
 	   */ 
-	   public Centrala(int id, double xSour, double ySour, int pocetSousC) {
-		  super(id, xSour, ySour, pocetSousC);
+	   public Factory(int id, double xAxis, double yAxis, int neighbourCount) {
+		   super(id, xAxis, yAxis, neighbourCount);
 	  }
 }
