@@ -14,8 +14,10 @@ public class Main {
 		
 		/** vytvori ArrayList do ktereho se budou ukladat objekty Entita */
 		ArrayList<Entity> entities = new ArrayList<Entity>();
+		/** vytvori ArrayList do ktereho se budou ukladat objekty Entita jako vrcholy grafu */
 		ArrayList<Vertex> planets = new ArrayList<Vertex>();
-		ArrayList<Vertex> shortestPath = new ArrayList<Vertex>();
+		
+		//ArrayList<Vertex> shortestPath = new ArrayList<Vertex>();
 		
 		/** vytvori promenou ktera urcuje pocet central v galaxii */
 		int factoriesCount = 5;
@@ -24,6 +26,8 @@ public class Main {
 		System.out.println("Zadej pocet planet");
 		/** vytvori promenou ktera urcuje pocet planet v galaxii */
 		int planetsCount = sc.nextInt();
+		/** vytvori pole do ktereho se bude ukladat pst vrcholu na ceste z vrcholu i do vrcholu j*/
+		ArrayList[][] shortestPath = new ArrayList[planetsCount][planetsCount]; 
 		/** vytvori promenou ktera urcuje pocet sousedu kazde planety(v zadani 5) */
 		int neighbourCountP = 6;
 		/** vytvori matici do ktere se budou ukladat id nejblizsich 6(5) sousedu */
@@ -43,5 +47,8 @@ public class Main {
 			Vertex veretexesP = new Vertex(i, 'B', neighbourCountP, adjId, planets);            
 			planets.add(veretexesP);
 		}	
+		
+		// zde bude volani metody, ktera naplni
+		shortestPath = Graph.shortestPath(planets);
 	}
 }
