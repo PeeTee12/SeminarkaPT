@@ -17,7 +17,8 @@ class Graph {
 	/** tato promenna uchovava pocet vytvorenych vrcholu*/
 	private int vertexCreated = 0;	
 	/** promenna uchovavajici informaci o to zda je graf orientovany */
-	private boolean connected;													
+	private boolean connected;			
+	private ArrayList<Vertex> shortestPath = new ArrayList<Vertex>();
 	
 	                                                              /* konstruktor */	   
 	/**
@@ -143,4 +144,33 @@ class Graph {
   			counter++;
   		}
   	}
+  	
+  	public ArrayList<Vertex> shortestPath(int start, ArrayList<Vertex> planets, ArrayList<Vertex> shortestPath) {
+  		
+  		ArrayList<Vertex> queue = new ArrayList<Vertex>(vertexCount);			//vytvori AL a vrcholy(frontu)
+  		int s = getId(start);													//promenna uchovavajici vrchol z ktereho se vychazi
+  		int counter = 0;
+	
+  		// zacatek relaxacniho algoritmu
+  		planets.get(0).distance = 0;     // vrchol je od sebe vzdaleny 0 jednotek                         // 1
+  		for(int i = 1; i < planets.size(); i ++) {                                                        // 1
+  			planets.get(i).distance = 100000;
+		}
+  		
+  		planets.get(0).color = 'S';      //nastavi vrchol jako videny                                     // 2
+  		queue.add(planets.get(0));       // prida planetu do fronty a zacne hledat nejkratsi cestu k ostatnim planetam
+  		
+  		while (queue.size() != 0) {    //dokud existuji otevrene vrcholy, opakujeme                       // 3
+  		    queue.get(0).color = 'C';  //vyber lib. vrchol a oznac ho jako uzavreny                       // 4 a 5
+  		  for(int i = 0; i < queue.get(0).neighbourCount; i ++) {//relacujeme lib.vrcchol                 // 6
+    		//pridat sousedy do fronty
+  			queue.get(0).neighbour[i].color = 'S';                                                        // 7
+  			if( queue.get(i).distance > ( queue.get(0).distance + Data.getDistance()[queue.get(0).key][queue.get(i).key]) ) {  // 8
+  				queue.get(i).distance = queue.get(0).distance + Data.getDistance()[queue.get(0).key][queue.get(i).key];        // 9
+  			}
+  		  }
+  		}  		
+  		return shortestPath;
+  	}
+  	
 }

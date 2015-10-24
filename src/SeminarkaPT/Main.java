@@ -15,6 +15,7 @@ public class Main {
 		/** vytvori ArrayList do ktereho se budou ukladat objekty Entita */
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 		ArrayList<Vertex> planets = new ArrayList<Vertex>();
+		ArrayList<Vertex> shortestPath = new ArrayList<Vertex>();
 		
 		/** vytvori promenou ktera urcuje pocet central v galaxii */
 		int factoriesCount = 5;
@@ -39,9 +40,8 @@ public class Main {
 		
 		/** V tomto foru se  na planety "nasadi na grafovou strukturu" */
 		for(int i = 0; i < planetsCount; i ++){
-			Vertex veretexesP = new Vertex(i, 'B');            
+			Vertex veretexesP = new Vertex(i, 'B', neighbourCountP, adjId, planets);            
 			planets.add(veretexesP);
-		}
-		//potrebuju neco pushnout--
+		}	
 	}
 }

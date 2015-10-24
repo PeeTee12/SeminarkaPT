@@ -18,6 +18,10 @@ public class Data {
 	/** x-ove a y-ove souradnice objektu */
 	private static double xAxis, yAxis;
 	 
+	public static double[][] getDistance() {
+		 return distance;
+	 }
+	
 	/**
 	 * Tato metoda vytvori centraly na pozadovanych(vyhodnych) souradnicich
 	 * @param factoriesCount
