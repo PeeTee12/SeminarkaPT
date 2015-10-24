@@ -16,11 +16,11 @@ public class Mapa extends JFrame{
 	private static final long serialVersionUID = 1L;
 	int pocetCent;
 	int pocetPlan;
-	ArrayList<Entita> ar;
+	ArrayList<Entity> ar;
 	int [][] mSousId;
 	//ArrayList<Pivovar> ar3;
 
-	public Mapa(int pocetPlan,int pocetCent, ArrayList<Entita>ar,int [][] mSousId) {
+	public Mapa(int pocetPlan,int pocetCent, ArrayList<Entity>ar,int [][] mSousId) {
 		this.pocetCent = pocetCent;
 		this.pocetPlan = pocetPlan;
 		this.ar = ar;
@@ -48,14 +48,14 @@ public class Mapa extends JFrame{
 		System.out.println("Prave jsem vstoupil do kresleni mapy");
 		g2.setColor(Color.BLUE);
 		for(int i = pocetCent; i < ar.size(); i++) {
-			g2.fill(new Ellipse2D.Double(ar.get(i).getXSour()+100, ar.get(i).getYSour()+130 , 4, 4));
+			g2.fill(new Ellipse2D.Double(ar.get(i).getXAxis()+100, ar.get(i).getYAxis()+130 , 4, 4));
 			//System.out.println("Prave jsem nakreslil planetu c.: "+i+" na souradnicich X: "+ar.get(i).getxSour()+" a Y: "+ar.get(i).getySour());
 		}
 		
 		
 		g2.setColor(Color.GREEN);
 		for(int j = 0; j < pocetCent; j++) {
-			g2.fill(new Ellipse2D.Double(ar.get(j).getXSour()+100, ar.get(j).getYSour()+130, 7, 7));
+			g2.fill(new Ellipse2D.Double(ar.get(j).getXAxis()+100, ar.get(j).getYAxis()+130, 7, 7));
 			//System.out.println("Prave jsem nakreslil planetu c.: "+i+" na souradnicich X: "+ar2.get(i).getXSour()+" a Y: "+ar2.get(i).getYSour());
 		}
 		
@@ -78,11 +78,11 @@ public class Mapa extends JFrame{
 		
 		g2.setColor(Color.BLACK);
 		for (int i = 0; i < ar.size(); i++) {	
-			g2.draw(new Line2D.Double(ar.get(i).getXSour()+2+100, ar.get(i).getYSour()+2+130, ar.get((mSousId [i][1])).getXSour()+2+100,  ar.get((mSousId [i][1])).getYSour()+2+130));
-			g2.draw(new Line2D.Double(ar.get(i).getXSour()+2+100, ar.get(i).getYSour()+2+130, ar.get((mSousId [i][2])).getXSour()+2+100,  ar.get((mSousId [i][2])).getYSour()+2+130));
-			g2.draw(new Line2D.Double(ar.get(i).getXSour()+2+100, ar.get(i).getYSour()+2+130, ar.get((mSousId [i][3])).getXSour()+2+100,  ar.get((mSousId [i][3])).getYSour()+2+130));
-			g2.draw(new Line2D.Double(ar.get(i).getXSour()+2+100, ar.get(i).getYSour()+2+130, ar.get((mSousId [i][4])).getXSour()+2+100,  ar.get((mSousId [i][4])).getYSour()+2+130));
-			g2.draw(new Line2D.Double(ar.get(i).getXSour()+2+100, ar.get(i).getYSour()+2+130, ar.get((mSousId [i][5])).getXSour()+2+100,  ar.get((mSousId [i][5])).getYSour()+2+130));
+			g2.draw(new Line2D.Double(ar.get(i).getXAxis()+2+100, ar.get(i).getYAxis()+2+130, ar.get((mSousId [i][1])).getXAxis()+2+100,  ar.get((mSousId [i][1])).getYAxis()+2+130));
+			g2.draw(new Line2D.Double(ar.get(i).getXAxis()+2+100, ar.get(i).getYAxis()+2+130, ar.get((mSousId [i][2])).getXAxis()+2+100,  ar.get((mSousId [i][2])).getYAxis()+2+130));
+			g2.draw(new Line2D.Double(ar.get(i).getXAxis()+2+100, ar.get(i).getYAxis()+2+130, ar.get((mSousId [i][3])).getXAxis()+2+100,  ar.get((mSousId [i][3])).getYAxis()+2+130));
+			g2.draw(new Line2D.Double(ar.get(i).getXAxis()+2+100, ar.get(i).getYAxis()+2+130, ar.get((mSousId [i][4])).getXAxis()+2+100,  ar.get((mSousId [i][4])).getYAxis()+2+130));
+			g2.draw(new Line2D.Double(ar.get(i).getXAxis()+2+100, ar.get(i).getYAxis()+2+130, ar.get((mSousId [i][5])).getXAxis()+2+100,  ar.get((mSousId [i][5])).getYAxis()+2+130));
 						
 						
 			//System.out.println( "Prave jsem nakreslil drahu mezi planetou c.: " +i+ " na souradnicich X: " +ar.get(i).getxSour()+ " a Y: " +ar.get(i).getySour()+ " a mezi planetou c.: "+mSousId [i][1]+" na souradnicich X: "+ar.get(mSousId [i][1]).getxSour()+" a Y: "+ar.get(mSousId [i][1]).getySour() );

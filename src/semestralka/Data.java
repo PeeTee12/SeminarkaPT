@@ -20,14 +20,14 @@ public class Data {
 	 
 	
 	 /** Tato metoda vytvori centraly na pozadovanych(vyhodnych) souradnicich */ 
-	 public static ArrayList<Entita> rozlozeniCentral(int pocetCent, int pocetPlan, ArrayList<Entita> entity, int pocetSousC) {
+	 public static ArrayList<Entity> rozlozeniCentral(int pocetCent, int pocetPlan, ArrayList<Entity> entity, int pocetSousC) {
 		 mVzdal = new double[pocetPlan+pocetCent][pocetPlan+pocetCent];
 		 
 		 /** vytvori centraly rozlozene pravidelne na kruznici */
 		 for (int i = 0; i < pocetCent; i++) {			  
 			 xSour = 200*Math.cos(Math.toRadians(72*i))+400;
 			 ySour = (-1*200*Math.sin(Math.toRadians(72*i)))+400;
-			 Centrala centrala = new Centrala(i, xSour, ySour, pocetSousC);
+			 Factory centrala = new Factory(i, xSour, ySour, pocetSousC);
 			 entity.add(centrala);
 		  }
 		  
@@ -44,7 +44,7 @@ public class Data {
 	 
 	
 	  /** Generuje random rozlozeni planet na zadanem uzemi.*/
-	 public static ArrayList<Entita> rozlozeniPlanet(int pocetCent,int pocetPlan, ArrayList<Entita> entity, int pocetSousP) {
+	 public static ArrayList<Entity> rozlozeniPlanet(int pocetCent,int pocetPlan, ArrayList<Entity> entity, int pocetSousP) {
 		 mSousVzd = new double[pocetPlan+pocetCent][pocetSousP]; 
 		 mSousId = new int[pocetPlan+pocetCent][pocetSousP];  
 
@@ -64,7 +64,7 @@ public class Data {
 	 		 ySour = rY.nextInt(mezY); 	
 	 		 	for(int j = 0; j < entity.size(); j++) {									// spocte zda  nove vytvarena planeta je dostatecne daleko od vdech vytvorenych entit
 	 																// pro centraly, tj. j=0;1;2;3;4
-	 		 			vzdAkt = Math.sqrt( Math.pow( (entity.get(j).getXSour() - xSour), 2) + Math.pow((entity.get(j).getYSour() - ySour), 2) );
+	 		 			vzdAkt = Math.sqrt( Math.pow( (entity.get(j).getXAxis() - xSour), 2) + Math.pow((entity.get(j).getYAxis() - ySour), 2) );
 		 		 		vzdPom.add(vzdAkt);	
 		 		 	  	mVzdal[j][i+pocetCent] = vzdAkt;
 		 		 	  	mVzdal[i+pocetCent][j] = vzdAkt;
@@ -72,7 +72,7 @@ public class Data {
 	 		 	}	
 	 		 vzd = Collections.min(vzdPom); 												// vybere nejmensi vzdaenost prave vytvarene planety a nejblizsi entity
 	 		 if(vzd > 2) { 																	// overi, zda dana planeta je dostatecne daleko, pkud ano, tak ji vytvori a prida do AL entit
-	 		 		Planeta pl = new Planeta( i, xSour, ySour, pocetSousP);
+	 		 		Planet pl = new Planet( i, xSour, ySour, pocetSousP);
 	 		 		entity.add(pl);
 	 		 		i++;
 	 		 }

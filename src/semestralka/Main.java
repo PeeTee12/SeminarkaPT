@@ -13,7 +13,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		/** vytvori ArrayList do ktereho se budou ukladat objekty Entita */
-		ArrayList<Entita> entity = new ArrayList<Entita>();
+		ArrayList<Entity> entity = new ArrayList<Entity>();
 		
 		/** vytvori promenou ktera urcuje pocet central v galaxii */
 		int pocetCent = 5;
