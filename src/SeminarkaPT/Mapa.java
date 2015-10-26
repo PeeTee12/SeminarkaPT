@@ -14,9 +14,13 @@ public class Mapa extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/** promenna uchovaajici pocet central*/
 	int factoriesCount;
+	/** promenna uchovaajici pocet planet*/
 	int planetsCount;
+	/** ArrayList uchovavajici vsechny objekty typu Entita*/
 	ArrayList<Entity> ar;
+	/** matice, ktera uchovava id 5 nejblisich sousedu*/
 	int [][] adjId;
 
 	/**

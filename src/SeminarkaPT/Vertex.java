@@ -15,12 +15,13 @@ class Vertex {
 	protected char color;		
 	/** deklaruje promennou uchovavajici pocet predchucu vrcholu */ 
 	protected int predecessor;		
-	/** deklaruje promennou uchovavajici vzdalenost vrcholu*/
+	/** deklaruje promennou uchovavajici vzdalenost vrcholu */
 	protected double distance;
+	/** prommena uchovavajici pocet sousedu*/
 	protected int neighbourCount;
 	protected Vertex[] neighbour;
 	
-	
+																				//konstruktory
 	/**
 	 * Konstruktor vrcholu
 	 * @param key
@@ -30,7 +31,14 @@ class Vertex {
 			this.key = key;
 			this.color = color;
 		}
-	 
+	/**
+	 * Konstruktor vrcholu 
+	 * @param key
+	 * @param color
+	 * @param neighbourCount
+	 * @param adjId
+	 * @param planets
+	 */
 	Vertex(int key, char color, int neighbourCount, int[][] adjId, ArrayList<Vertex> planets) {
 		this.key = key;
 		this.color = color;
@@ -40,7 +48,7 @@ class Vertex {
 		}
 	}
 	
-	
+																			//metody
 	/**
 	* Metoda pro tisk vrcholu
 	*/

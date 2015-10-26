@@ -15,10 +15,7 @@ public class Main {
 		/** vytvori ArrayList do ktereho se budou ukladat objekty Entita */
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 		/** vytvori ArrayList do ktereho se budou ukladat objekty Entita jako vrcholy grafu */
-		ArrayList<Vertex> planets = new ArrayList<Vertex>();
-		
-		//ArrayList<Vertex> shortestPath = new ArrayList<Vertex>();
-		
+		ArrayList<Vertex> planets = new ArrayList<Vertex>();		
 		/** vytvori promenou ktera urcuje pocet central v galaxii */
 		int factoriesCount = 5;
 		/** vytvori promenou ktera urcuje pocet sousedu kazde centraly */
@@ -26,29 +23,31 @@ public class Main {
 		System.out.println("Zadej pocet planet");
 		/** vytvori promenou ktera urcuje pocet planet v galaxii */
 		int planetsCount = sc.nextInt();
-		/** vytvori pole do ktereho se bude ukladat pst vrcholu na ceste z vrcholu i do vrcholu j*/
-		ArrayList[][] shortestPath = new ArrayList[planetsCount][planetsCount]; 
 		/** vytvori promenou ktera urcuje pocet sousedu kazde planety(v zadani 5) */
 		int neighbourCountP = 6;
+		/** vytvori pole do ktereho se bude ukladat pst vrcholu na ceste z vrcholu i do vrcholu j*/
+		ArrayList[][] shortestPath = new ArrayList[planetsCount][planetsCount]; 		
 		/** vytvori matici do ktere se budou ukladat id nejblizsich 6(5) sousedu */
 		int[][] adjId = new int[planetsCount+factoriesCount][neighbourCountP];
 		
 		/** zavola metodu, ktera vytvori centraly */
-		entities = Data.factoriesDistribution(factoriesCount, planetsCount, entities, neighbourCountF);
+		entities = Data.factoriesDistribution(factoriesCount, planetsCount, neighbourCountF, entities);
 		/** zavola metodu, ktera vytvori planety */
-		entities = Data.planetsDistribution(factoriesCount, planetsCount, entities, neighbourCountP);		
+		entities = Data.planetsDistribution(factoriesCount, planetsCount, neighbourCountP, entities);		
 		/** zavola metodu, ktera vyplni matici Id sousedu */
-		adjId = Data.idSousedu(planetsCount, factoriesCount, neighbourCountP); 
+		//adjId = Data.idSousedu(factoriesCount, planetsCount, neighbourCountP); 
 		/** zavola metodu, ktera nazorne vykresli galaxii, tj. plnety,  centraly a cesty mezi nimi */
-		new Mapa(planetsCount,factoriesCount, entities, adjId);
+		//new Mapa(planetsCount,factoriesCount, entities, adjId);
 		
+	
 		/** V tomto foru se  na planety "nasadi na grafovou strukturu" */
+		/**
 		for(int i = 0; i < planetsCount; i ++){
 			Vertex veretexesP = new Vertex(i, 'B', neighbourCountP, adjId, planets);            
 			planets.add(veretexesP);
-		}	
+		}	*/
 		
 		// zde bude volani metody, ktera naplni
-		shortestPath = Graph.shortestPath(planets);
+		//shortestPath = Graph.shortestPath(planets);
 	}
 }
