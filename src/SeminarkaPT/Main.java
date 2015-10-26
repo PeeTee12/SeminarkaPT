@@ -1,6 +1,7 @@
 package SeminarkaPT;
 
 import java.io.IOException;
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,16 +29,19 @@ public class Main {
 		/** vytvori pole do ktereho se bude ukladat pst vrcholu na ceste z vrcholu i do vrcholu j*/
 		ArrayList[][] shortestPath = new ArrayList[planetsCount][planetsCount]; 		
 		/** vytvori matici do ktere se budou ukladat id nejblizsich 6(5) sousedu */
-		int[][] adjId = new int[planetsCount+factoriesCount][neighbourCountP];
+		int[][] adjIdF = new int[factoriesCount][neighbourCountF];
+		int[][] adjIdP = new int[planetsCount][neighbourCountP];
 		
 		/** zavola metodu, ktera vytvori centraly */
 		entities = Data.factoriesDistribution(factoriesCount, planetsCount, neighbourCountF, entities);
 		/** zavola metodu, ktera vytvori planety */
 		entities = Data.planetsDistribution(factoriesCount, planetsCount, neighbourCountP, entities);		
 		/** zavola metodu, ktera vyplni matici Id sousedu */
-		//adjId = Data.idSousedu(factoriesCount, planetsCount, neighbourCountP); 
+		adjIdF = Data.idSousedu(factoriesCount, planetsCount, neighbourCountF);
+		/** zavola metodu, ktera vyplni matici Id sousedu */
+		adjIdP = Data.idSousedu(planetsCount, factoriesCount, neighbourCountP); 
 		/** zavola metodu, ktera nazorne vykresli galaxii, tj. plnety,  centraly a cesty mezi nimi */
-		//new Mapa(planetsCount,factoriesCount, entities, adjId);
+		new Mapa(factoriesCount, planetsCount, neighbourCountF, neighbourCountP, entities, adjIdF, adjIdP);
 		
 	
 		/** V tomto foru se  na planety "nasadi na grafovou strukturu" */

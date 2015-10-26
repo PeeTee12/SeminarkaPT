@@ -11,12 +11,13 @@ import java.util.Random;
 public class Data {
 	/** pole se vzdalenostmi entit */
 	private static double[][] distance;		
-	/** pole se 5 nejblizsimi vzdalenostmi */
-	private static double[][] adjDistance;		
-	/** pole se 5 Id nejblizsich vzdalenosti */
+	/** pole se n nejmensimi vzdalenostmi mezi centralou a jejimi sousedy */
+	private static double[][] adjDist;				
+	/** pole s n Id nejblizsich sousedu centraly */
 	private static int[][] adjId;
 	/** x-ove a y-ove souradnice objektu */
 	private static double xAxis, yAxis;
+	/** pomocna promenna uchovavajici aktualni vzdalenost*/
 	private static double actDist = 0;
 	 
 	
@@ -97,59 +98,58 @@ public class Data {
 	  * @return
 	  * @throws IOException
 	  */
-	 public static int [][] idSousedu(int factoriesCount, int planetsCount, int neighbourCountP) throws IOException {	
-		 adjDistance = new double[factoriesCount+factoriesCount][neighbourCountP];                  // deklaruje velikost matice uchvavajici vzdalenost sousednich objektu
-		 adjId = new int[factoriesCount+factoriesCount][neighbourCountP];                           // deklaruje velikost matice uchvavajici Id sousednich objektu
-		 double[] auxAr = new double[planetsCount+factoriesCount];									// pomocne pole pro serazeni vzdalenosti
-		 BufferedWriter bw1 = new BufferedWriter(new FileWriter("seznamVzdal.txt"));				// BW na vypis do textaku vzdalenosti entit
-		 BufferedWriter bw2 = new BufferedWriter(new FileWriter("seznamVzdalSeraz.txt"));			// BW na vypis do textaku serazenych vzdalenosti entit
-		 BufferedWriter bw3 = new BufferedWriter(new FileWriter("seznamId.txt"));					// BW na vypis do textaku Id sousedu
+	 public static int [][] idSousedu(int entitiesCount, int auxEntCount, int neighbourCount) throws IOException {	
+		 adjDist = new double[entitiesCount][neighbourCount];       								// deklaruje velikost matice uchvavajici vzdalenost central a jejich sousedu
+		 adjId = new int[entitiesCount][neighbourCount];                           					// deklaruje velikost matice uchvavajici Id sousedu centraly
+		 double[] auxAr = new double[entitiesCount+auxEntCount];									// pomocne pole pro serazeni vzdalenosti
+		 BufferedWriter bw1 = new BufferedWriter(new FileWriter("seznamVzdal.txt", true));				// BW na vypis do textaku vzdalenosti entit
+		 BufferedWriter bw2 = new BufferedWriter(new FileWriter("seznamVzdalSeraz.txt", true));			// BW na vypis do textaku serazenych vzdalenosti entit
+		 BufferedWriter bw3 = new BufferedWriter(new FileWriter("seznamId.txt", true));					// BW na vypis do textaku Id sousedu
 		  
-		 for (int i = 0; i < planetsCount+factoriesCount; i++) {
-			 for (int j = 0; j < planetsCount+factoriesCount; j++) {
-				 if(j < factoriesCount) {
-					 auxAr [j] = distance[i][j];
-				 }
-				 else {
-					 auxAr [j] = distance[i+factoriesCount][j];
-				 }
-				 auxAr [j] = distance[i][j];														// ulozi vzdalenost objektu i a j do pole, ktere se pak seradi		
+		 for (int i = 0; i < entitiesCount+auxEntCount; i++) {
+			 for (int j = 0; j < entitiesCount+auxEntCount; j++) {
+				 auxAr [j] = distance[i][j];														// prepise j-ty radek do pomocneho pole		
 				 if(j == 0){
-					 bw1.write("Entita c."+(i+1)+":  ");											// pro kazdy prvek udela novy popisek, pouze pro prehlednost textu		
+					 bw1.write("Entita c."+(i+1)+":  ");											// pro kazdy prvek udela novy popisek, pouze pro prehlednost textu	
 				 }
 				 bw1.write(Math.floor(distance [i][j])+"  ");										// vypise vzdalenost entity i od entity j, zakrouhleni je z duvodu setreni mista
-				 if(j == planetsCount+factoriesCount-1){											// nez se zacne pracovat s dalsim objektem odradkuje, opet pouze pro prehlednost textu	
+				 if(j == entitiesCount+auxEntCount-1){												// nez se zacne pracovat s dalsim objektem odradkuje, opet pouze pro prehlednost textu	
 					 bw1.newLine();
 					 bw1.newLine();
 				 }
 			 }	
-			 Arrays.sort(auxAr);																	//seradi vzdalensoti objektu i a vsech ostatnich
+			 Arrays.sort(auxAr);																	//seradi vzdalensoti objektu i od vsech ostatnich
 			
-			 for (int j = 0; j < neighbourCountP; j++) {											// v tomto foru se najde 5 nejblizsich sousedu objektu i
-				 adjDistance [i][j] = auxAr [j] ;													//ulozi 5 nejblizsich sousedu pro nasledne vytvoreni cest			
-				 if(j == 0){
-					 bw2.write("Planeta c."+(i+1)+":  ");											// pro kazdy prvek udela novy popisek, pouze pro prehlednost textu	
-				 }
-				 bw2.write(Math.floor(adjDistance [i][j])+"  ");									// vypise vzdalenosti 5 nejblizsich entit 
-				 if(j == neighbourCountP-1){														// nez se zacne pracovat s dalsim objektem odradkuje, opet pouze pro prehlednost textu
-					 bw2.newLine();
-					 bw2.newLine();
-				 }
-			 }
-			  
-			 for (int j = 1; j < neighbourCountP; j++) {											// v tomto foru se zjisti Id 5 nejblizsich sousedu objektu i
-				 for (int k = 0; k < planetsCount+factoriesCount; k++) {
-					 if( adjDistance [i][j] == distance [i][k]) {									// zjistujeme, kdy se vzdalenosti rovnaji, predpokladame, ze nemuze nastat nejednoznacnost
-						 adjId [i][j] = k;															//zjisti id nejblizsich 5 sousedu
-					 }
-				 }
-				 if(j == 1){
-					 bw3.write("Planeta c."+(i+1)+":  ");											// pro kazdy prvek udela novy popisek, pouze pro prehlednost textu	
-				 }
-				 bw3.write(Math.floor(adjId [i][j])+"  ");
-				 if(j == neighbourCountP-1){														// nez se zacne pracovat s dalsim objektem odradkuje, opet pouze pro prehlednost textu
-					 bw3.newLine();
-					 bw3.newLine();
+			 for (int j = 0; j < neighbourCount; j++) {												// v tomto foru se najde N nejblizsich sousedu objektu i
+				if(i < entitiesCount){	
+					adjDist [i][j] = auxAr[j] ;														//ulozi N nejblizsich sousedu pro nasledne vytvoreni cest		
+					if(j == 0){
+						bw2.write("Entita c."+(i+1)+":  ");												// pro kazdy prvek udela novy popisek, pouze pro prehlednost textu	
+					}
+					bw2.write(Math.floor(adjDist [i][j])+"  ");										// vypise vzdalenosti 5 nejblizsich entit 
+					if(j == neighbourCount-1) {														// nez se zacne pracovat s dalsim objektem odradkuje, opet pouze pro prehlednost textu
+						bw2.newLine();
+						bw2.newLine();
+					}
+				}
+			}
+			
+			 
+			for (int j = 1; j < neighbourCount; j++) {											// v tomto foru se zjisti Id 5 nejblizsich sousedu objektu i
+				 for (int k = 0; k < entitiesCount+auxEntCount; k++) {
+					 if(i < entitiesCount){	
+						 if( adjDist [i][j] == distance [i][k]) {									// zjistujeme, kdy se vzdalenosti rovnaji, predpokladame, ze nemuze nastat nejednoznacnost
+							 adjId [i][j] = k;															//zjisti id nejblizsich 5 sousedu
+						 }
+						 if(j == 1){
+							bw3.write("Entita c."+(i+1)+":  ");											// pro kazdy prvek udela novy popisek, pouze pro prehlednost textu	
+						 }
+						 bw3.write(Math.floor(adjId [i][j])+"  ");
+						 if(j == neighbourCount-1){														// nez se zacne pracovat s dalsim objektem odradkuje, opet pouze pro prehlednost textu
+							bw3.newLine();
+							bw3.newLine();
+						 }
+					}
 				 }
 			}
 		}
