@@ -11,7 +11,9 @@ public class Planet extends Entity {
 	
 	  															/* konstruktor */	     
 	/**
-	* Vytvori planetu se zadanym id a souradnicemi, poctem sousedu
+	* Vytvori planetu se zadanym id a souradnicemi, poctem sousedu a vygeneruje populaci podle normalniho rozdeleni
+	* pravdepodobnosti se stredem 3000000 a odchylkou 2900000 (nad 100000 obyvatel). Pravdepodobnost vygenerovani
+	* cisla mimo rozsah je teoreticky 0,3 %.
 	* @param id 
 	* @param xSour, ySour
 	* @param pocetSousC
@@ -19,16 +21,22 @@ public class Planet extends Entity {
 	public Planet(int id, double xAxis, double yAxis, int neighbourCount) {
 		super(id, xAxis, yAxis, neighbourCount);
 		status = true;
-		//populCount = 												TADY JE TREBA DODELAT GENEROVANI OBYVATEL 100K-10M, ridi se normalnim/Gaussovo rozdelenim, stredni hodnota je 3M
+		double population = r.nextGaussian() * 2900000/3 + 3000000;
+		populCount = (int) Math.round(population);
+		//System.out.println(populCount);												
 	}	  
 	
 	/**
-	 * Tato metoda urcuje vlastni produkci leku na planete
+	 * Tato metoda urcuje vlastni produkci leku na planete. Tato metoda urcuje vlastni produkci leku na planete. Nejprve vygeneruje procentualni pokryti
+	 * a z nej se potom vypocita konecny pocet leku. Vyrobi se pouze cele baleni leku, proto cele cislo.
 	 * @param populCount
 	 * @return
 	 */
 	public double drugProduction(int populCount) {
-		//TADY JE TREBA DODELAT GENEROVANI PRODUKCE, TJ. 20-80% KRÁT POCET OBYVATEL
+		double percentage = 0.2 + (0.8 - 0.2) * r.nextDouble();
+		double drugs = Math.round(percentage*100.0)/100.0;
+		drugProduction = (int) Math.round(drugs * populCount);
+		//System.out.println(drugProduction);
   		return drugProduction;
   	}
 	

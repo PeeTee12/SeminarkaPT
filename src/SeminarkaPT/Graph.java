@@ -1,5 +1,8 @@
 package SeminarkaPT;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +21,7 @@ public class Graph {
 	private int vertexCreated = 0;	
 	/** promenna uchovavajici informaci o to zda je graf orientovany */
 	private boolean connected;			
-	private static ArrayList[][] shortestPath;
+	private static int[][] shortestPath;
 	
 	                                                              /* konstruktor */	   
 	/**
@@ -145,32 +148,31 @@ public class Graph {
   		}
   	}
   	
-  	public static ArrayList<Integer>[][] shortestPath (ArrayList<Vertex> planets) {
-  		
-  		shortestPath = new ArrayList[planets.size()][planets.size()];
+  	public static int[][] shortestPath (ArrayList<Vertex> entitiesV) throws IOException {
+  		shortestPath = new int[entitiesV.size()][entitiesV.size()];
   		ArrayList<Vertex> queue = new ArrayList<Vertex>(vertexCount);			//vytvori AL a vrcholy(frontu)
   		
-  		for(int start = 0; start < planets.size(); start++) {                       // pro kazdy vrchol s najde nejkratsi cestu do vsech ostatnich vrcholu
-  		    int s = getId(start);													//promenna uchovavajici vrchol z ktereho se vychazi
+  		for(int start = 0; start < entitiesV.size(); start++) {                       // pro kazdy vrchol s najde nejkratsi cestu do vsech ostatnich vrcholu
+  		   //int s = getId(start);													//promenna uchovavajici vrchol z ktereho se vychazi
 	
   		// zacatek relaxacniho algoritmu
-  		   planets.get(s).distance = 0;     // vrchol je od sebe vzdaleny 0 jednotek                         // 1
-  		   for(int i = 1; i < planets.size(); i ++) {                                                        // 1
-  			  planets.get(i).distance = 100000;
+  		   entitiesV.get(start).distance = 0;     // vrchol je od sebe vzdaleny 0 jednotek                         // 1
+  		   for(int i = 1; i < entitiesV.size(); i ++) {                                                        // 1
+  			  entitiesV.get(i).distance = 100000;																 // nastavi vzdalenost vsech ostatnich vrcholu 100000(inf)
 		   }
   		
-  		   planets.get(0).color = 'S';      //nastavi vrchol jako videny                                     // 2
-  		   queue.add(planets.get(0));       // prida planetu do fronty a zacne hledat nejkratsi cestu k ostatnim planetam
+  		   entitiesV.get(0).color = 'S';      //nastavi vrchol jako videny                                     // 2
+  		   queue.add(entitiesV.get(0));       // prida planetu do fronty a zacne hledat nejkratsi cestu k ostatnim planetam
   		
   		   while (queue.size() != 0) {    //dokud existuji otevrene vrcholy, opakujeme                       // 3
   		       queue.get(0).color = 'C';  //vyber lib. vrchol a oznac ho jako uzavreny                       // 4 a 5
-  		       for(int i = 0; i < queue.get(0).neighbourCount; i ++) {//relacujeme lib.vrcchol                 // 6
+  		       for(int i = 0; i < queue.get(0).neighbourCount; i ++) {//relaxujeme lib.vrcchol                 // 6
     		//pridat sousedy do fronty
   			      queue.get(0).neighbour[i].color = 'S';                                                        // 7
   			      if( queue.get(i).distance > ( queue.get(0).distance + Data.getDistance()[queue.get(0).key][queue.get(i).key]) ) {  // 8
   				     queue.get(i).distance = queue.get(0).distance + Data.getDistance()[queue.get(0).key][queue.get(i).key];        // 9
   				     // tady je jeste treba dodelat ukladani vrcholu na ceste
-  				      shortestPath[s][i].add(planets.get(i).key);
+  				      shortestPath[start][i]= (int) (entitiesV.get(i).distance);
   			      }  
   		      }
   		   }  	  	

@@ -39,13 +39,15 @@ class Vertex {
 	 * @param adjId
 	 * @param planets
 	 */
-	Vertex(int key, char color, int neighbourCount, int[][] adjId, ArrayList<Vertex> planets) {
+	Vertex(int key, char color, int neighbourCount, int[][] adjId, ArrayList<Vertex> entitiesV) {
 		this.key = key;
 		this.color = color;
 		this.neighbourCount = neighbourCount;
+	
+		/*
 		for(int i = 0; i < neighbourCount; i++) {
-			neighbour[i] = planets.get(adjId[key][i]);
-		}
+			neighbour[i] = adjId[key][i];
+		}*/
 	}
 	
 																			//metody
